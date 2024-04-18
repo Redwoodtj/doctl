@@ -10,7 +10,7 @@
 #
 # See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 #  for guidance on the style of this Dockerfile
-FROM ubuntu:focal as builder
+FROM ubuntu:20.04 as builder
 
 RUN apt-get update && apt-get install --yes \
         curl \
@@ -60,7 +60,7 @@ RUN curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/sna
 
 # Multi-stage build, only need the snaps from the builder. Copy them one at a
 # time so they can be cached.
-FROM ubuntu:focal
+FROM ubuntu:20.04
 COPY --from=builder /snap/core /snap/core
 COPY --from=builder /snap/core18 /snap/core18
 COPY --from=builder /snap/core20 /snap/core20
